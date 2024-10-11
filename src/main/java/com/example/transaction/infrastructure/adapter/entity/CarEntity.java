@@ -1,8 +1,9 @@
 package com.example.transaction.infrastructure.adapter.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "car")
@@ -14,10 +15,9 @@ import java.time.LocalDateTime;
 public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Integer idArticle;
-    private int quantity;
-    private String state;
-    private BigDecimal price;
-    private LocalDateTime date;
+    private Long idUser;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ArticleEntity> articles;
+    private LocalDateTime dateUpdate;
+    private LocalDateTime dateCreate;
 }

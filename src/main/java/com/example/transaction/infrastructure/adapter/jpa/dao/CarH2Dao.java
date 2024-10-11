@@ -6,7 +6,6 @@ import com.example.transaction.infrastructure.adapter.jpa.CarSpringJpaAdapterRep
 import com.example.transaction.infrastructure.adapter.mapper.CarDboMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import java.sql.Timestamp;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -17,14 +16,9 @@ public class CarH2Dao implements CarDao {
     private final CarDboMapper carDboMapper;
 
     @Override
-    public Car getSupply(Long id) {
-        Optional<CarEntity> optionalArticle = carSpringJpaAdapterRepository.findById(id);
-        return optionalArticle.map(carDboMapper::toDomain).orElse(null);
-    }
-
-    @Override
-    public boolean dateExist(Timestamp email) {
-        return false;
+    public Car getCar(Long id) {
+        Optional<CarEntity> optionalCar = carSpringJpaAdapterRepository.findById(id);
+        return optionalCar.map(carDboMapper::toDomain).orElse(null);
     }
 
     @Override

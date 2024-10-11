@@ -18,7 +18,6 @@ public class CarH2Repository implements CarRepository {
     @Override
     public Car create(Car request) {
         CarEntity userToSave = carDboMapper.toDatabase(request);
-        userToSave.setDate(request.getDate());
         CarEntity userSaved = carSpringJpaAdapterRepository.save(userToSave);
         return carDboMapper.toDomain(userSaved);
     }

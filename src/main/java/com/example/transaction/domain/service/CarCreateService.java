@@ -1,43 +1,22 @@
 package com.example.transaction.domain.service;
-import com.example.transaction.domain.model.dto.command.CarCreateCommand;
 import com.example.transaction.domain.model.entity.Car;
 import com.example.transaction.domain.model.exception.CarException;
 import com.example.transaction.domain.port.dao.CarDao;
 import com.example.transaction.domain.port.repository.CarRepository;
 import lombok.AllArgsConstructor;
 
-import java.util.List;
-
-import static com.example.transaction.domain.model.constant.CarConstant.LIST_EMPTY;
-import static com.example.transaction.domain.model.constant.CarConstant.MESSAGE_ERROR_ADD;
+import static com.example.transaction.domain.model.constant.CarConstant.USER_NO_EXIST;
 
 @AllArgsConstructor
 public class CarCreateService {
     private final CarRepository carRepository;
     private final CarDao carDao;
 
-
-
-    public List<Car> execute(List<CarCreateCommand> createCommands) {
-        if (createCommands.isEmpty())
-           throw new CarException(LIST_EMPTY);
-        return createCommands.stream()
-                .map(this::processCreateCommand)
-                .toList();
-    }
-
-    private Car processCreateCommand(CarCreateCommand createCommand) {
-        validateParams(createCommand);
-        Car carToCreate = createSupply(createCommand);
+    public Car execute(Long user) {
+        if (carDao.idExist(user))
+            throw  new CarException(USER_NO_EXIST);
+        Car carToCreate = new Car().requestToCreate(user);
         return carRepository.create(carToCreate);
     }
 
-    private Car createSupply(CarCreateCommand createCommand) {
-        return new Car().requestToCreate(createCommand);
-    }
-
-    private void validateParams(CarCreateCommand createCommand) {
-        if (createCommand.getId() != null && carDao.idExist(createCommand.getId()))
-            throw new CarException(MESSAGE_ERROR_ADD);
-    }
 }

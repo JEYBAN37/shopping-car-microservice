@@ -11,14 +11,21 @@ public class CarConstant {
     public static final String ARTICLE_MANDATORY = "id article is mandatory";
     public static final String ARTICLE_MESSAGE_MIN_ERROR = "id article must  be greater than zero";
     public static final String QUANTITY_MANDATORY = "quantity is mandatory";
+    public static final String USER_MANDATORY = "user is mandatory";
     public static final String QUANTITY_MESSAGE_MIN_ERROR = "Quantity must be greater than zero";
+    public static final String USER_MESSAGE_MIN_ERROR = "User must be greater than zero";
     public static final int MAXIMUM_ALLOW_LETTERS = 50;
-    public static final String MESSAGE_MANDATORY = "state is mandatory";
-    public static final String MESSAGE_MAX_BIGGER = "state don't be bigger than 10 characters";
+    public static final String MAX_DATE_CREATE = "The update date cannot be earlier than the creation date";
+    public static final String MESSAGE_DATE_NOT_NULL = "date don't be null";
     public static final String MESSAGE_ERROR_ADD = "Car Exist";
-    public static final String LIST_EMPTY = "List Empty";
-    public static final String PRICE_MANDATORY = "price is mandatory";
+    public static final String MESSAGE_ERROR_REMOVE = "Error To Delete";
+    public static final String USER_NO_EXIST = "User no exists";
     public static final String PRICE_MIN_ZERO = "price article must  be greater than zero";
-
+    public static final String INVALID_ID_MESSAGE = "Invalid article ID";
+    public static final String ARTICLE_ID = " for article ID: ";
+    public static final String ARTICLES_NOT_EMPTY = "The articles map cannot be null or empty";
+    public static final String  CAR_NO_EXIST = "Car of User Not Exist";
+    public static final String ARTICLE_NO_EXIST = "Article no exists";
+    public static final String ARTICLE_NO_STOCK = "Article no quantity in Stock";
 
 }

@@ -6,10 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CarDtoMapper {
-    @Mapping(source = "idArticle", target = "idArticle")
-    @Mapping(source = "quantity", target = "quantity")
-    @Mapping(source = "state", target = "state")
-    @Mapping(source = "price", target = "price")
-    @Mapping(source = "date", target = "date")
+    @Mapping(source = "idUser", target = "idUser")
+    @Mapping(source = "articles", target = "articles")
+    @Mapping(source = "dateUpdate", target = "dateUpdate")
+    @Mapping(source = "dateCreate", target = "dateCreate")
     CarDto toDto (Car objectOfDomain);
 }

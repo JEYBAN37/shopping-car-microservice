@@ -19,13 +19,18 @@ public class CarConstant {
     public static final String MESSAGE_DATE_NOT_NULL = "date don't be null";
     public static final String MESSAGE_ERROR_ADD = "Car Exist";
     public static final String MESSAGE_ERROR_REMOVE = "Error To Delete";
-    public static final String USER_NO_EXIST = "User no exists";
+    public static final String USER_EXIST = "Car of User exists";
     public static final String PRICE_MIN_ZERO = "price article must  be greater than zero";
     public static final String INVALID_ID_MESSAGE = "Invalid article ID";
     public static final String ARTICLE_ID = " for article ID: ";
     public static final String ARTICLES_NOT_EMPTY = "The articles map cannot be null or empty";
     public static final String  CAR_NO_EXIST = "Car of User Not Exist";
     public static final String ARTICLE_NO_EXIST = "Article no exists";
-    public static final String ARTICLE_NO_STOCK = "Article no quantity in Stock";
-
+    public static final String ARTICLE_NO_STOCK = " no quantity in Stock";
+    public static final String ARTICLE_THREE_CATEGORIES = "The articles must have three categories";
+    public static final String MESSAGE_PAGE_VALID = "Page index must be non-negative and size must be greater than zero.";
+    public static final String NAME = "name";
+    public static final String ID = "id";
+    public static final String CATEGORY = "categories";
+    public static final String BRAND = "brand";
 }

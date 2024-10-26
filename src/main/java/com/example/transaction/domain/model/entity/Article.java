@@ -5,18 +5,22 @@ import com.example.transaction.domain.model.entity.articlevalidate.State;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class Article {
     private Long id;
     private ArticleQuantity quantity;
+    private Long brand;
     private State state;
+    private List<Long> categories;
 
-    public Article (Long id, int quantity , State state){
+    public Article (Long id, int quantity , State state, List<Long> categories){
         this.id = id;
         this.quantity = ArticleQuantity.of(quantity);
         this.state = state;
-
+        this.categories = categories;
     }
 
     public int getQuantity (){return quantity.getQuantity();}

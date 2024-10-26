@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -27,13 +28,12 @@ public class CarUpdateService {
     public Car execute(CarEditCommand editCommand,Long id) {
 
        Car carUser = carDao.getCar(id);
-
        if(carUser == null)
             throw new CarException(CAR_NO_EXIST);
 
        List<Article> update = updateCarArticles(carUser.getArticles(),editCommand.getIdArticles());
-       LocalDateTime updateDate = LocalDateTime.now();
-       return carRepository.update(new Car(id,updateDate,update));
+       carUser.updateDate(LocalDateTime.now());
+       return carRepository.update(new Car(id,carUser.getDateUpdate(),update,carUser.getDateCreate()));
     }
 
     public List<Article> updateCarArticles(List<Article> articlesCar, Map<Long, Integer> articlesNewCar) {
@@ -48,7 +48,8 @@ public class CarUpdateService {
                 .filter(articleId -> !currentArticlesMap.containsKey(articleId))
                 .toList();
 
-        List<Article> newArticlesFromStock = articleService.getArticlesByIds(newArticleIds);
+        // Get articles from stock
+        List<Article> newArticlesFromStock = articleService.getArticlesOnlyIds(newArticleIds);
 
 
         Map<Long, Article> newArticlesMap = newArticlesFromStock.stream()
@@ -65,6 +66,7 @@ public class CarUpdateService {
                 Article currentArticle = currentArticlesMap.get(articleId);
                 int totalQuantity = currentArticle.getQuantity() + newQuantity;
 
+
                 validateStock(currentArticle, totalQuantity);
 
                 currentArticle.setQuantity(totalQuantity);
@@ -78,10 +80,16 @@ public class CarUpdateService {
 
                 validateStock(articleFromStock, newQuantity);
 
-                updatedArticle = new Article(articleId, newQuantity, articleFromStock.getState());
+                updatedArticle = new Article(articleId,
+                        newQuantity,
+                        articleFromStock.getState(),
+                        articleFromStock.getCategories());
             }
-
             updatedArticles.add(updatedArticle);
+        }
+
+        if(!hasCategoriesWithThreeOccurrences(updatedArticles)){
+            throw new CarException(ARTICLE_THREE_CATEGORIES);
         }
 
         return updatedArticles;
@@ -89,7 +97,25 @@ public class CarUpdateService {
 
     private void validateStock(Article article, int requestedQuantity) {
         if (article.getQuantity() < requestedQuantity)
-            throw new CarException(ARTICLE_NO_STOCK);
+            throw new CarException(" id " + article.getId() + ARTICLE_NO_STOCK );
 
+    }
+
+    public boolean hasCategoriesWithThreeOccurrences(List<Article> updatedArticles) {
+        Map<Long, Integer> categoryCount = new HashMap<>();
+
+        updatedArticles.forEach(article ->
+            article.getCategories().forEach(category ->
+                categoryCount.put(category, categoryCount.getOrDefault(category, 0) + 1)
+            )
+        );
+
+        for (Integer count : categoryCount.values()) {
+            if (count > 3) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

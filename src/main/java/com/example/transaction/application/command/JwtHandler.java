@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class JwtHandler {
     private final JwtService jwtService;
 
-    public Long getUserIdFromToken(String token) {
+    public Integer getUserIdFromToken(String token) {
         return jwtService.extractUserId(token);
     }
 

@@ -23,7 +23,7 @@ public class JwtClient implements JwtService {
     }
 
 
-    public boolean hasAnyRole(String token, List<String> requiredRoles) {
+        public boolean hasAnyRole(String token, List<String> requiredRoles) {
         List<String> userRoles = extractRoles(token);
         return userRoles.stream().anyMatch(requiredRoles::contains);
     }
@@ -51,8 +51,9 @@ public class JwtClient implements JwtService {
     }
 
     @Override
-    public Long extractUserId(String token) {
-        return extractClaim(token, claims -> claims.get("id", Long.class));
+    public Integer extractUserId(String token) {
+        Integer id = extractClaim(token, claims -> claims.get("id", Integer.class));
+        return id;
     }
 
     private byte[] hexStringToByteArray(String s) {

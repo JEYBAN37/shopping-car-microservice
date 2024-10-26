@@ -15,7 +15,8 @@ public class CarCreateHandler {
     private final JwtHandler jwtHandler;
 
     public CarDto execute (String token){
-        Long userId = jwtHandler.getUserIdFromToken(token);
+        String cleanToken = token.replace("Bearer ", "").trim();
+        Long userId = Long.valueOf(jwtHandler.getUserIdFromToken(cleanToken));
         return carDtoMapper.toDto(carCreateService.execute(userId));
     }
 

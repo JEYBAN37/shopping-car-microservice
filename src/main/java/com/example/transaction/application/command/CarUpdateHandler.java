@@ -13,9 +13,13 @@ public class CarUpdateHandler {
     private final CarUpdateService carUpdateService;
     private final CarDtoMapper carDtoMapper;
     private final JwtHandler jwtHandler;
+    private final FeignClientInterceptorHandler feignClientInterceptorHandler;
+
 
     public CarDto execute (CarEditCommand editCommand, String token){
-        Long id = jwtHandler.getUserIdFromToken(token);
+        String cleanToken = token.replace("Bearer ", "").trim();
+        Long id = Long.valueOf(jwtHandler.getUserIdFromToken(cleanToken));
+        feignClientInterceptorHandler.sendToken(cleanToken);
         return carDtoMapper.toDto(carUpdateService.execute(editCommand, id));
     }
 }

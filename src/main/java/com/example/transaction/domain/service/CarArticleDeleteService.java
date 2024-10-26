@@ -39,6 +39,6 @@ public class CarArticleDeleteService {
         List<Article> update = carUser.getArticles();
         LocalDateTime updateDate = LocalDateTime.now();
 
-        carRepository.update(new Car(id,updateDate,update));
+        carRepository.update(new Car(id,updateDate,update,carUser.getDateCreate()));
     }
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 
@@ -14,5 +13,4 @@ import java.util.Map;
 @Getter
 public class CarEditCommand {
     private Map<Long,Integer> idArticles;
-    private LocalDateTime dateUpdate;
 }

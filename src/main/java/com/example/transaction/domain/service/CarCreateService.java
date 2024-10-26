@@ -5,7 +5,7 @@ import com.example.transaction.domain.port.dao.CarDao;
 import com.example.transaction.domain.port.repository.CarRepository;
 import lombok.AllArgsConstructor;
 
-import static com.example.transaction.domain.model.constant.CarConstant.USER_NO_EXIST;
+import static com.example.transaction.domain.model.constant.CarConstant.USER_EXIST;
 
 @AllArgsConstructor
 public class CarCreateService {
@@ -14,7 +14,7 @@ public class CarCreateService {
 
     public Car execute(Long user) {
         if (carDao.idExist(user))
-            throw  new CarException(USER_NO_EXIST);
+            throw  new CarException(USER_EXIST);
         Car carToCreate = new Car().requestToCreate(user);
         return carRepository.create(carToCreate);
     }

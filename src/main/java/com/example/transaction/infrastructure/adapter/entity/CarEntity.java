@@ -14,9 +14,13 @@ import java.util.List;
 @Setter
 public class CarEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "car_article",  // Nombre de la tabla intermedia
+            joinColumns = @JoinColumn(name = "car_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id")
+    )
     private List<ArticleEntity> articles;
     private LocalDateTime dateUpdate;
     private LocalDateTime dateCreate;

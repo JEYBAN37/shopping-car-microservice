@@ -8,13 +8,14 @@ import java.time.LocalDateTime;
 public class CarDateCreate {
     LocalDateTime date;
 
-    private CarDateCreate(LocalDateTime  date) {
+    public CarDateCreate(LocalDateTime  date) {
         this.date = date;
     }
 
     public static CarDateCreate of() {
         return new CarDateCreate(nowDate());
     }
+
 
     private static LocalDateTime nowDate() {
         return LocalDateTime.now();

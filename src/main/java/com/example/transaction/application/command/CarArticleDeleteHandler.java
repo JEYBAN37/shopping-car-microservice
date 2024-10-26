@@ -13,8 +13,8 @@ public class CarArticleDeleteHandler {
     private final JwtHandler jwtHandler;
 
     public void execute (CarDeleteCommand carDeleteCommand, String token){
-        Long userId = jwtHandler.getUserIdFromToken(token);
-        carArticleDeleteService.execute(userId,carDeleteCommand);
+        Integer userId = jwtHandler.getUserIdFromToken(token);
+        carArticleDeleteService.execute(Long.valueOf(userId),carDeleteCommand);
     }
 
 }

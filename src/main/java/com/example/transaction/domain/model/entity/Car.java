@@ -19,22 +19,28 @@ public class Car {
     private CarDateUpdate dateUpdate;
     private CarDateCreate dateCreate;
 
-
-    public Car(Long idUser, LocalDateTime dateUpdate, List<Article> articles){
+    // Constructor
+    public Car(Long idUser, LocalDateTime dateUpdate, List<Article> articles,LocalDateTime dateCreate) {
         this.articles = articles;
         this.idUser = CarIdUser.of(idUser);
-        this.dateUpdate = CarDateUpdate.of(dateUpdate);
+        this.dateCreate = new CarDateCreate(dateCreate);  // Solo se crea una vez
+        this.dateUpdate = CarDateUpdate.of(dateUpdate, dateCreate);  // Valida la actualización
     }
 
-    public Car requestToCreate(Long id)
-    {
+    public Car requestToCreate(Long id) {
         this.idUser = CarIdUser.of(id);
-        this.dateCreate = CarDateCreate.of();
+        this.dateCreate = CarDateCreate.of();  // Fecha de creación solo una vez
+        this.dateUpdate = CarDateUpdate.of(dateCreate.getDate().plusMinutes(1), dateCreate.getDate());  // Validación de fecha de actualización
         return this;
     }
 
-    public Long getIdUser() {return idUser.getIdUser();}
-    public LocalDateTime getDateCreate() {return dateCreate.getDate();}
-    public LocalDateTime getDateUpdate(){return dateUpdate.getDate();}
+    // Getters
+    public Long getIdUser() { return idUser.getIdUser(); }
+    public LocalDateTime getDateCreate() { return dateCreate.getDate(); }
+    public LocalDateTime getDateUpdate() { return dateUpdate.getDate(); }
+
+    public void updateDate(LocalDateTime newDate) {
+        this.dateUpdate = CarDateUpdate.of(newDate, dateCreate.getDate());  // Se valida que la nueva fecha sea posterior a la de creación
+    }
 }
 

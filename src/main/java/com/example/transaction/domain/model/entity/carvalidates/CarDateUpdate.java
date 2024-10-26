@@ -8,30 +8,27 @@ import java.util.Objects;
 import static com.example.transaction.domain.model.constant.CarConstant.MESSAGE_DATE_NOT_NULL;
 import static com.example.transaction.domain.model.constant.CarConstant.MAX_DATE_CREATE;
 
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
 public class CarDateUpdate {
-    LocalDateTime date;
-    private CarDateUpdate(LocalDateTime  date){
+    private LocalDateTime date;
+
+    private CarDateUpdate(LocalDateTime date) {
         this.date = date;
     }
 
-    public static CarDateUpdate of(LocalDateTime  date) {
-        toValidUpdateDate(date);
+    public static CarDateUpdate of(LocalDateTime date, LocalDateTime creationDate) {
+        toValidUpdateDate(date, creationDate);
         return new CarDateUpdate(date);
     }
 
-    private static void toValidUpdateDate(LocalDateTime date) {
-
-        if (Objects.isNull(date))
+    private static void toValidUpdateDate(LocalDateTime date, LocalDateTime creationDate) {
+        if (Objects.isNull(date)) {
             throw new CarException(MESSAGE_DATE_NOT_NULL);
+        }
 
-        LocalDateTime creationDate = LocalDateTime.now();
-
-        if (date.isBefore(creationDate))
+        if (date.isBefore(creationDate)) {
             throw new CarException(MAX_DATE_CREATE);
-
-
+        }
     }
-
 }

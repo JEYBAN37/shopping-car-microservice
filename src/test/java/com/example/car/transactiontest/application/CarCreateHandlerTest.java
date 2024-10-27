@@ -29,7 +29,7 @@ class CarCreateHandlerTest {
 
     @Test
     void testExecuteCreateCarSuccess() {
-        String token = "Bearer valid_token";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlkIjo4NSwic3ViIjoianVwdXNAZXhhbXBsZS5jb20iLCJpYXQiOjE3MzAwMzk2ODQsImV4cCI6MTczMDEyNjA4NH0.1hEj6FR5791ZKbF-AAjZmQ3gTTfdoRugMgoURHBJEB4";
         Long userId = 123L;
         Car car = new Car(); // Initialize with necessary fields
         CarDto carDto = new CarDto(); // Initialize as needed
@@ -48,7 +48,7 @@ class CarCreateHandlerTest {
 
     @Test
     void testExecuteCreateCarInvalidToken() {
-        String token = "Bearer invalid_token";
+        String token = "invalid_token";
         when(jwtHandler.getUserIdFromToken(token)).thenThrow(new RuntimeException("Invalid token"));
 
         assertThrows(RuntimeException.class, () -> {

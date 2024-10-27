@@ -16,8 +16,8 @@ import java.util.stream.IntStream;
 @AllArgsConstructor
 @Service
 public class HttpArticleService implements ArticleService {
-    ArticleClient articleClient;
-    ArticleDboMapper articleDboMapper;
+    private final ArticleClient articleClient;
+    private final ArticleDboMapper articleDboMapper;
 
     @Override
     public List<Article> getArticlesOnlyIds(List<Long> ids) {

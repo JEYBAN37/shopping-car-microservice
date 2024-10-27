@@ -52,8 +52,7 @@ public class JwtClient implements JwtService {
 
     @Override
     public Integer extractUserId(String token) {
-        Integer id = extractClaim(token, claims -> claims.get("id", Integer.class));
-        return id;
+        return extractClaim(token, claims -> claims.get("id", Integer.class));
     }
 
     private byte[] hexStringToByteArray(String s) {

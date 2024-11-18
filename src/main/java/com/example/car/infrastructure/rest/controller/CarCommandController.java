@@ -39,7 +39,7 @@ public class CarCommandController {
             @ApiResponse(responseCode = "200", description = "Brand updated", content = @Content),
             @ApiResponse(responseCode = "404", description = "Brand not found", content = @Content)
     })
-    @PutMapping("/update")
+    @PutMapping("update/")
     public CarDto addArticleToCar (@RequestBody CarEditCommand editCommand, @RequestHeader("Authorization") String token){
         return carUpdateHandler.execute(editCommand, token);
     }
@@ -50,7 +50,7 @@ public class CarCommandController {
             @ApiResponse(responseCode = "404", description = "Category not found", content = @Content)
     })
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("delete/")
     public void deleteById(@RequestBody CarDeleteCommand carDeleteCommand, @RequestHeader("Authorization") String token){
         carArticleDeleteHandler.execute(carDeleteCommand,token);
     }

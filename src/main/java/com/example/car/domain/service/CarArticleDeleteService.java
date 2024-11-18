@@ -9,6 +9,7 @@ import com.example.car.domain.port.repository.CarRepository;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.car.domain.model.constant.CarConstant.CAR_NO_EXIST;
@@ -19,26 +20,37 @@ public class CarArticleDeleteService {
     private final CarRepository carRepository;
     private final CarDao carDao;
 
-    public void execute(Long id, CarDeleteCommand carDeleteCommand){
+    public void execute(Long id, CarDeleteCommand carDeleteCommand) {
 
         Car carUser = carDao.getCar(id);
 
-        if(carUser == null)
+        if (carUser == null) {
             throw new CarException(CAR_NO_EXIST);
+        }
 
-        carUser.getArticles().removeIf(article -> article.getId().
-                equals(carDeleteCommand.getIdArticle()));
+        // Create a mutable copy of the articles list
+        List<Article> mutableArticles = new ArrayList<>(carUser.getArticles());
 
+        // Find the article to be removed
+        Article articleToRemove = mutableArticles.stream()
+                .filter(article -> article.getId().equals(carDeleteCommand.getIdArticle()))
+                .findFirst()
+                .orElse(null);
 
-        boolean removed = carUser.getArticles().removeIf(article ->
-                article.getId().equals(carDeleteCommand.getIdArticle()));
-        if (!removed) {
+        if (articleToRemove == null) {
             throw new CarException(MESSAGE_ERROR_REMOVE);
         }
 
-        List<Article> update = carUser.getArticles();
-        LocalDateTime updateDate = LocalDateTime.now();
+        // Remove the article from the mutable list
+        mutableArticles.remove(articleToRemove);
 
-        carRepository.update(new Car(id,updateDate,update,carUser.getDateCreate()));
+        // Update the car with the modified articles list and update date
+        LocalDateTime updateDate = LocalDateTime.now();
+        carUser.setArticles(mutableArticles);  // Assuming Car has a setArticles method
+        carUser.updateDate(updateDate);     // Assuming Car has a setUpdateDate method
+
+        carRepository.update(carUser);
     }
+
+
 }
